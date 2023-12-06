@@ -23,15 +23,19 @@ return [
 
             'tags' => [
 
-                // [
-                //    'name' => 'user',
-                //    'description' => 'Application users',
-                // ],
+                 [
+                    'name' => 'user',
+                    'description' => 'Application users',
+                 ],
+                 [
+                    'name' => 'todo',
+                    'description' => 'Application todos',
+                 ],
 
             ],
 
             'security' => [
-                // GoldSpecDigital\ObjectOrientedOAS\Objects\SecurityRequirement::create()->securityScheme('JWT'),
+                 GoldSpecDigital\ObjectOrientedOAS\Objects\SecurityRequirement::create()->securityScheme('BearerToken'),
             ],
 
             // Non standard attributes used by code/doc generation tools can be added here
