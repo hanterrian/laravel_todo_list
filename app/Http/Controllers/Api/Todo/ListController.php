@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TodoResource;
 use App\Interfaces\Service\TodoListServiceInterface;
 use App\OpenApi\Parameters\TodoListFilterParameters;
-use App\OpenApi\RequestBodies\TodoListRequestBody;
 use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
