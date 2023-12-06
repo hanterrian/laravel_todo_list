@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TodoListRepository implements TodoListRepositoryInterface
 {
+    /**
+     * @param  TodoFilterDTO  $todoFilterDTO
+     * @return Collection<Todo>
+     */
     public function getTodoList(TodoFilterDTO $todoFilterDTO): Collection
     {
         return Todo::all();
