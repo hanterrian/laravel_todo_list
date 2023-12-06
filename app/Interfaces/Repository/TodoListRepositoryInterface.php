@@ -31,7 +31,7 @@ interface TodoListRepositoryInterface
 
     public function createTodo(TodoDTO $data): Todo;
 
-    public function updateTodo(int $id, TodoDTO $data): Todo;
+    public function updateTodo(int $id, TodoDTO $data): bool;
 
     public function deleteTodo(int $id): bool;
 }

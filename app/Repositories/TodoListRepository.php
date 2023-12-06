@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\DTO\TodoDTO;
+use App\Enums\TodoStatusEnum;
 use App\Interfaces\Repository\TodoListRepositoryInterface;
 use App\Models\Todo;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,36 +19,36 @@ class TodoListRepository implements TodoListRepositoryInterface
 
     public function getTodoList(): Collection
     {
-        // TODO: Implement getTodoList() method.
+        return Todo::whereStatus(TodoStatusEnum::TODO)->get();
     }
 
     public function getCompletedTodoList(): Collection
     {
-        // TODO: Implement getCompletedTodoList() method.
+        return Todo::whereStatus(TodoStatusEnum::DONE)->get();
     }
 
     public function getTodoById(int $id): Todo
     {
-        // TODO: Implement getTodoById() method.
+        return Todo::findOrFail($id);
     }
 
     public function markTodoAsComplete(int $id): bool
     {
-        // TODO: Implement markTodoAsComplete() method.
+        return Todo::findOrFail($id)->update(['status' => TodoStatusEnum::DONE]);
     }
 
     public function createTodo(TodoDTO $data): Todo
     {
-        // TODO: Implement createTodo() method.
+        return Todo::create($data);
     }
 
-    public function updateTodo(int $id, TodoDTO $data): Todo
+    public function updateTodo(int $id, TodoDTO $data): bool
     {
-        // TODO: Implement updateTodo() method.
+        return Todo::findOrFail($id)->update((array)$data);
     }
 
     public function deleteTodo(int $id): bool
     {
-        // TODO: Implement deleteTodo() method.
+        return !!Todo::destroy($id);
     }
 }
