@@ -58,6 +58,11 @@ class Todo extends Model
         'completed_at' => 'timestamp',
     ];
 
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Todo::class, 'parent_id');
