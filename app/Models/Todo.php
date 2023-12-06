@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * App\Models\Todo
  *
  * @property int $id
+ * @property int $owner_id
  * @property int $parent_id
  * @property string $status
  * @property int $priority
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Todo> $chilren
  * @property-read int|null $chilren_count
+ * @property-read \App\Models\User|null $owner
  * @property-read Todo|null $parent
  * @method static \Database\Factories\TodoFactory factory($count = null, $state = [])
  * @method static Builder|Todo newModelQuery()
@@ -35,6 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|Todo whereCreatedAt($value)
  * @method static Builder|Todo whereDescription($value)
  * @method static Builder|Todo whereId($value)
+ * @method static Builder|Todo whereOwnerId($value)
  * @method static Builder|Todo whereParentId($value)
  * @method static Builder|Todo wherePriority($value)
  * @method static Builder|Todo whereStatus($value)
