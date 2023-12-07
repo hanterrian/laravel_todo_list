@@ -12,7 +12,7 @@ return new class () extends Migration {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'owner_id');
-            $table->foreignIdFor(Todo::class, 'parent_id');
+            $table->foreignIdFor(Todo::class, 'parent_id')->nullable();
             $table->string('status');
             $table->integer('priority');
             $table->string('title');

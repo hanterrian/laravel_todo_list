@@ -16,6 +16,6 @@ class TodoObserver
      */
     public function creating(Todo $todo): void
     {
-        $todo->owner_id = \Auth::user()->id;
+        $todo->owner_id = $todo->owner_id ?? \Auth::user()?->id;
     }
 }
