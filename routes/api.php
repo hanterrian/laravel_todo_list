@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Todo\CompleteController;
 use App\Http\Controllers\Api\Todo\CreateController;
 use App\Http\Controllers\Api\Todo\DeleteController;
@@ -24,13 +26,18 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'todo'], function () {
-    Route::get('list', [ListController::class, '__invoke']);
-    Route::get('show', [ShowController::class, '__invoke']);
-    Route::get('complete', [CompleteController::class, '__invoke']);
-    Route::post('create', [CreateController::class, '__invoke']);
-    Route::put('update', [UpdateController::class, '__invoke']);
-    Route::delete('delete', [DeleteController::class, '__invoke']);
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', [LoginController::class, '__invoke']);
+
+    Route::post('logout', [LogoutController::class, '__invoke'])
+        ->middleware(['auth:sanctum']);
 });
 
-require __DIR__.'/auth.php';
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'todo'], function () {
+    Route::get('list', [ListController::class, '__invoke']);
+    Route::get('show/{id}', [ShowController::class, '__invoke']);
+    Route::get('complete/{id}', [CompleteController::class, '__invoke']);
+    Route::post('create', [CreateController::class, '__invoke']);
+    Route::put('update/{id}', [UpdateController::class, '__invoke']);
+    Route::delete('delete', [DeleteController::class, '__invoke']);
+});

@@ -5,10 +5,11 @@ namespace App\DTO;
 class TodoFilterDTO
 {
     public function __construct(
-        private string $status,
-        private int $priority,
-        private string $title,
-        private string $description,
+        private ?string $status = null,
+        private ?int $priority = null,
+        private ?string $title = null,
+        private ?string $description = null,
+        private ?string $sort = null,
     ) {
     }
 
@@ -50,5 +51,15 @@ class TodoFilterDTO
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getSort(): string
+    {
+        return $this->sort;
+    }
+
+    public function setSort(string $sort): void
+    {
+        $this->sort = $sort;
     }
 }
