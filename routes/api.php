@@ -32,3 +32,5 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'todo'], function ()
     Route::put('update', [UpdateController::class, '__invoke']);
     Route::delete('delete', [DeleteController::class, '__invoke']);
 });
+
+require __DIR__.'/auth.php';
