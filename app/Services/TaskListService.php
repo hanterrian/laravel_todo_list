@@ -61,22 +61,6 @@ class TaskListService implements TaskListServiceInterface
      */
     public function markAsDone(int $id): bool
     {
-        $task = $this->todoListRepository->getTaskById($id);
-
-        if ($task->status === TaskStatusEnum::DONE) {
-            throw ValidationException::withMessages([
-                'id' => 'Task is already completed',
-            ]);
-        }
-
-        $uncompleteChildrenCount = $this->todoListRepository->getUncompleteChildrenCount($id);
-
-        if ($uncompleteChildrenCount !== 0) {
-            throw ValidationException::withMessages([
-                'id' => 'You cannot finish a task until you have completed all sub-tasks',
-            ]);
-        }
-
         return $this->todoListRepository->markTaskAsComplete($id);
     }
 

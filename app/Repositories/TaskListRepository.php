@@ -12,6 +12,8 @@ use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Models\Task;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
 
 class TaskListRepository implements TaskListRepositoryInterface
@@ -30,18 +32,26 @@ class TaskListRepository implements TaskListRepositoryInterface
         return Task::withExists(['children'])->findOrFail($id)->getData();
     }
 
-    public function getUncompleteChildrenCount(int $id): int
-    {
-        $item = Task::findOrFail($id);
-
-        return $item->children()
-            ->where('status', TaskStatusEnum::TODO)
-            ->count();
-    }
-
     public function markTaskAsComplete(int $id): bool
     {
-        return Task::findOrFail($id)->update([
+        $task = Task::with([
+            'children' => function (HasMany $query) {
+                $query->where(['status' => TaskStatusEnum::TODO]);
+            },
+        ])->findOrFail($id);
+
+        if ($task->status === TaskStatusEnum::DONE) {
+            throw ValidationException::withMessages([
+                'id' => 'Task is already completed',
+            ]);
+        }
+
+        if ($task->children->count() > 0) {
+            throw ValidationException::withMessages([
+                'id' => 'You cannot finish a task until you have completed all sub-tasks',
+            ]);
+        }
+        return $task->update([
             'status' => TaskStatusEnum::DONE,
             'completed_at' => Carbon::now(),
         ]);

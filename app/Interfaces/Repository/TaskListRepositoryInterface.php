@@ -20,8 +20,6 @@ interface TaskListRepositoryInterface
 
     public function getTaskById(int $id): TaskDTO;
 
-    public function getUncompleteChildrenCount(int $id): int;
-
     public function markTaskAsComplete(int $id): bool;
 
     public function createTask(CreateTaskRequest $data): TaskDTO;
