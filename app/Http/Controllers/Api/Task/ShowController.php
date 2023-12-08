@@ -18,14 +18,12 @@ class ShowController extends Controller
     }
 
     /**
-     * Show todo
-     *
      * @param  int  $id
-     * @return TaskResource
+     * @return \App\DTO\TaskDTO
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     public function __invoke(int $id)
     {
-        return new TaskResource($this->taskListService->getOne($id));
+        return $this->taskListService->getOne($id);
     }
 }

@@ -20,15 +20,13 @@ class ListController extends Controller
     }
 
     /**
-     * List of tasks
-     *
      * @param  Request  $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return \Spatie\LaravelData\DataCollection
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     #[OpenApi\Parameters(factory: TaskListFilterParameters::class)]
     public function __invoke(Request $request)
     {
-        return TaskResource::collection($this->taskListService->getAll($request));
+        return $this->taskListService->getAll($request);
     }
 }

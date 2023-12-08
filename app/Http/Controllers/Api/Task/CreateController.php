@@ -19,14 +19,12 @@ class CreateController extends Controller
     }
 
     /**
-     * Create todo
-     *
      * @param  Request  $request
-     * @return TaskResource
+     * @return \App\DTO\TaskDTO
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'POST')]
     public function __invoke(Request $request)
     {
-        return new TaskResource($this->taskListService->store($request));
+        return $this->taskListService->store($request);
     }
 }

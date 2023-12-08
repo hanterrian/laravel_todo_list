@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Interfaces\Service\AuthServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthService implements AuthServiceInterface
 {
@@ -17,9 +21,7 @@ class AuthService implements AuthServiceInterface
         ]);
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            throw new ValidationException('Wrong email or password');
         }
 
         $user = $request->user();

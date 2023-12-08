@@ -20,12 +20,12 @@ class TaskListRepository implements TaskListRepositoryInterface
      */
     public function getTaskList(TaskFilterDTO $todoFilterDTO): DataCollection
     {
-        return TaskDTO::collection(Task::all());
+        return TaskDTO::collection(Task::withExists(['children'])->get());
     }
 
     public function getTaskById(int $id): TaskDTO
     {
-        return Task::findOrFail($id)->getData();
+        return Task::withExists(['children'])->findOrFail($id)->getData();
     }
 
     public function getUncompleteChildrenCount(int $id): int

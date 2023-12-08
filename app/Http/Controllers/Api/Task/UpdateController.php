@@ -18,16 +18,9 @@ class UpdateController extends Controller
     ) {
     }
 
-    /**
-     * Update todo
-     *
-     * @param  int  $id
-     * @param  Request  $request
-     * @return TaskResource
-     */
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
     public function __invoke(int $id, Request $request)
     {
-        return new TaskResource($this->taskListService->update($id, $request));
+        return $this->taskListService->update($id, $request);
     }
 }

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\DTO;
 
 use App\Enums\TaskStatusEnum;
-use Carbon\CarbonImmutable;
+use App\Models\Task;
+use Illuminate\Support\Carbon;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Optional;
+use Spatie\LaravelData\DataCollection;
 
 class TaskDTO extends Data
 {
@@ -18,9 +20,25 @@ class TaskDTO extends Data
         public int $priority,
         public string $title,
         public string $description,
-        public $children,
-        public ?CarbonImmutable $createdAt,
-        public ?CarbonImmutable $completedAt,
+        #[DataCollectionOf(TaskDTO::class)]
+        public ?DataCollection $children,
+        public ?Carbon $createdAt,
+        public ?Carbon $completedAt,
     ) {
+    }
+
+    public static function fromModel(Task $task): self
+    {
+        return new self(
+            id: $task->id,
+            parent_id: $task->parent_id,
+            status: $task->status,
+            priority: $task->priority,
+            title: $task->title,
+            description: $task->description,
+            children: TaskDTO::collection($task->children),
+            createdAt: $task->created_at,
+            completedAt: $task->completed_at,
+        );
     }
 }
