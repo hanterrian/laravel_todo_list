@@ -64,7 +64,7 @@ class Task extends Model
     protected $casts = [
         'priority' => 'integer',
         'status' => TaskStatusEnum::class,
-        'completed_at' => 'timestamp',
+        'completed_at' => 'date',
     ];
 
     protected $dataClass = TaskDTO::class;

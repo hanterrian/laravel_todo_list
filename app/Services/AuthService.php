@@ -21,7 +21,9 @@ class AuthService implements AuthServiceInterface
         ]);
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
-            throw new ValidationException('Wrong email or password');
+            throw ValidationException::withMessages([
+                'email' => 'Wrong email or password',
+            ]);
         }
 
         $user = $request->user();

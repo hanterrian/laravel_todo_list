@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Service\TaskListServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 /**
@@ -34,12 +35,12 @@ class CompleteController extends Controller
      * Complete task
      *
      * @param  int  $id
-     * @return void
+     * @return JsonResponse
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
-    public function __invoke(int $id)
+    public function __invoke(int $id): JsonResponse
     {
-        response()->json([
+        return response()->json([
             'status' => $this->taskListService->markAsDone($id),
         ]);
     }
