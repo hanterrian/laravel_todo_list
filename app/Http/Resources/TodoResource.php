@@ -14,10 +14,12 @@ class TodoResource extends JsonResource
     {
         return [
             'id' => $this->id,
+//            'owner' => new UserResource($this->owner),
             'status' => $this->status,
             'priority' => $this->priority,
             'title' => $this->title,
             'description' => $this->description,
+            'child' => TodoResource::collection($this->chilren),
             'completed_at' => $this->completed_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Scopes\OwnerScope;
 use Database\Factories\TodoFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,6 +61,11 @@ class Todo extends Model
     protected $casts = [
         'completed_at' => 'timestamp',
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new OwnerScope());
+    }
 
     public function owner(): BelongsTo
     {
