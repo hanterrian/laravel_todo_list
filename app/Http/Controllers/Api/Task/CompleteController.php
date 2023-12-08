@@ -8,16 +8,30 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\Service\TaskListServiceInterface;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
+/**
+ * This class represents a controller responsible for completing tasks.
+ *
+ * Class CompleteController
+ * @package App\Http\Controllers\Api\Task
+ *
+ * @property TaskListServiceInterface $taskListService The task list service interface implementation.
+ */
 #[OpenApi\PathItem]
 class CompleteController extends Controller
 {
+    /**
+     * Constructor for initializing the class.
+     *
+     * @param  TaskListServiceInterface  $taskListService  The task list service interface implementation.
+     * @return void
+     */
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
     /**
-     * Complete todo
+     * Complete task
      *
      * @param  int  $id
      * @return void
@@ -26,7 +40,7 @@ class CompleteController extends Controller
     public function __invoke(int $id)
     {
         response()->json([
-            'status' => $this->todoListService->markAsDone($id),
+            'status' => $this->taskListService->markAsDone($id),
         ]);
     }
 }

@@ -13,7 +13,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class ShowController extends Controller
 {
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
@@ -26,6 +26,6 @@ class ShowController extends Controller
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     public function __invoke(int $id)
     {
-        return new TaskResource($this->todoListService->getOne($id));
+        return new TaskResource($this->taskListService->getOne($id));
     }
 }

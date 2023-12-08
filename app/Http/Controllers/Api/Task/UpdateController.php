@@ -14,7 +14,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class UpdateController extends Controller
 {
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
@@ -28,6 +28,6 @@ class UpdateController extends Controller
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
     public function __invoke(int $id, Request $request)
     {
-        return new TaskResource($this->todoListService->update($id, $request));
+        return new TaskResource($this->taskListService->update($id, $request));
     }
 }

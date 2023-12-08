@@ -14,7 +14,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class CreateController extends Controller
 {
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
@@ -27,6 +27,6 @@ class CreateController extends Controller
     #[OpenApi\Operation(tags: ['todo'], method: 'POST')]
     public function __invoke(Request $request)
     {
-        return new TaskResource($this->todoListService->store($request));
+        return new TaskResource($this->taskListService->store($request));
     }
 }

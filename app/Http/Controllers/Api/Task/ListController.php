@@ -15,7 +15,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class ListController extends Controller
 {
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
@@ -29,6 +29,6 @@ class ListController extends Controller
     #[OpenApi\Parameters(factory: TaskListFilterParameters::class)]
     public function __invoke(Request $request)
     {
-        return TaskResource::collection($this->todoListService->getAll($request));
+        return TaskResource::collection($this->taskListService->getAll($request));
     }
 }

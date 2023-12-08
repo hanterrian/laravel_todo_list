@@ -12,7 +12,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class DeleteController extends Controller
 {
     public function __construct(
-        private readonly TaskListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $taskListService
     ) {
     }
 
@@ -26,7 +26,7 @@ class DeleteController extends Controller
     public function __invoke(int $id)
     {
         response()->json([
-            'status' => $this->todoListService->delete($id),
+            'status' => $this->taskListService->delete($id),
         ]);
     }
 }
