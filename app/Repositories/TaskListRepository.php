@@ -7,6 +7,8 @@ namespace App\Repositories;
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
 use App\Enums\TaskStatusEnum;
+use App\Http\Requests\Task\CreateTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -32,7 +34,7 @@ class TaskListRepository implements TaskListRepositoryInterface
     {
         $item = Task::findOrFail($id);
 
-        return $item->chilren()
+        return $item->children()
             ->where('status', TaskStatusEnum::TODO)
             ->count();
     }
@@ -45,16 +47,16 @@ class TaskListRepository implements TaskListRepositoryInterface
         ]);
     }
 
-    public function createTask(TaskDTO $data): TaskDTO
+    public function createTask(CreateTaskRequest $data): TaskDTO
     {
-        return Task::create($data->toArray())->getData();
+        return Task::create($data->all())->getData();
     }
 
-    public function updateTask(int $id, TaskDTO $data): TaskDTO
+    public function updateTask(int $id, UpdateTaskRequest $data): TaskDTO
     {
         $todo = Task::findOrFail($id);
 
-        $todo->update($data->toArray());
+        $todo->update($data->all());
 
         return $todo->getData();
     }

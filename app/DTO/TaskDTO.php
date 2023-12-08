@@ -13,6 +13,17 @@ use Spatie\LaravelData\DataCollection;
 
 class TaskDTO extends Data
 {
+    /**
+     * @param  int|null  $id
+     * @param  int|null  $parent_id
+     * @param  TaskStatusEnum  $status
+     * @param  int  $priority
+     * @param  string  $title
+     * @param  string  $description
+     * @param  DataCollection<TaskDTO>|null  $children
+     * @param  Carbon|null  $createdAt
+     * @param  Carbon|null  $completedAt
+     */
     public function __construct(
         public ?int $id,
         public ?int $parent_id,

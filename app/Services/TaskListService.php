@@ -7,6 +7,8 @@ namespace App\Services;
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
 use App\Enums\TaskStatusEnum;
+use App\Http\Requests\Task\CreateTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Interfaces\Service\TaskListServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -68,29 +70,14 @@ class TaskListService implements TaskListServiceInterface
         return $this->todoListRepository->markTaskAsComplete($id);
     }
 
-    public function store(Request $request): TaskDTO
+    public function store(CreateTaskRequest $request): TaskDTO
     {
-        $data = $request->validate([
-            'parent_id' => ['integer', Rule::exists('tasks', 'id')],
-            'status' => ['required', Rule::enum(TaskStatusEnum::class)],
-            'priority' => ['required', 'integer', 'min:1', 'max:5'],
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:5000'],
-        ]);
-
-        return $this->todoListRepository->createTask(TaskDTO::from($data));
+        return $this->todoListRepository->createTask($request);
     }
 
-    public function update(int $id, Request $request): TaskDTO
+    public function update(int $id, UpdateTaskRequest $request): TaskDTO
     {
-        $data = $request->validate([
-            'status' => ['required', Rule::enum(TaskStatusEnum::class)],
-            'priority' => ['required', 'integer', 'min:1', 'max:5'],
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:5000'],
-        ]);
-
-        return $this->todoListRepository->updateTask($id, TaskDTO::from($data));
+        return $this->todoListRepository->updateTask($id, $request);
     }
 
     public function delete(int $id): bool
