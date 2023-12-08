@@ -39,5 +39,5 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'task'], function ()
     Route::get('complete/{id}', [CompleteController::class, '__invoke']);
     Route::post('create', [CreateController::class, '__invoke']);
     Route::put('update/{id}', [UpdateController::class, '__invoke']);
-    Route::delete('delete', [DeleteController::class, '__invoke']);
+    Route::delete('delete/{id}', [DeleteController::class, '__invoke']);
 });

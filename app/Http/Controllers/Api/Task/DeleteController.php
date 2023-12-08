@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\Service\TaskListServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -20,12 +21,12 @@ class DeleteController extends Controller
      * Delete todo
      *
      * @param  int  $id
-     * @return void
+     * @return JsonResponse
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'DELETE')]
-    public function __invoke(int $id)
+    public function __invoke(int $id): JsonResponse
     {
-        response()->json([
+        return response()->json([
             'status' => $this->taskListService->delete($id),
         ]);
     }

@@ -73,6 +73,6 @@ class TaskListRepository implements TaskListRepositoryInterface
 
     public function deleteTask(int $id): bool
     {
-        return !!Task::destroy($id);
+        return !!Task::findOrFail($id)->delete();
     }
 }
