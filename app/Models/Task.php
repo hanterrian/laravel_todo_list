@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\DTO\TaskDTO;
 use App\Models\Scopes\OwnerScope;
 use Database\Factories\TaskFactory;
 use Eloquent;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\LaravelData\WithData;
 
 /**
  * App\Models\Task
@@ -48,7 +50,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, WithData;
 
     protected $fillable = [
         'status',
@@ -61,6 +63,8 @@ class Task extends Model
     protected $casts = [
         'completed_at' => 'timestamp',
     ];
+
+    protected $dataClass = TaskDTO::class;
 
     protected static function booted(): void
     {

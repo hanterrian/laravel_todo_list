@@ -10,27 +10,27 @@ use App\Enums\TaskStatusEnum;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Models\Task;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Spatie\LaravelData\DataCollection;
 
 class TaskListRepository implements TaskListRepositoryInterface
 {
     /**
      * @param  TaskFilterDTO  $todoFilterDTO
-     * @return Collection<Task>
+     * @return DataCollection<TaskDTO>
      */
-    public function getTaskList(TaskFilterDTO $todoFilterDTO): Collection
+    public function getTaskList(TaskFilterDTO $todoFilterDTO): DataCollection
     {
-        return Task::all();
+        return TaskDTO::collection(Task::all());
     }
 
-    public function getTaskById(int $id): Task
+    public function getTaskById(int $id): TaskDTO
     {
-        return Task::findOrFail($id);
+        return Task::findOrFail($id)->getData();
     }
 
     public function getUncompleteChildrenCount(int $id): int
     {
-        $item = $this->getTaskById($id);
+        $item = Task::findOrFail($id);
 
         return $item->chilren()
             ->where('status', TaskStatusEnum::TODO)
@@ -39,24 +39,24 @@ class TaskListRepository implements TaskListRepositoryInterface
 
     public function markTaskAsComplete(int $id): bool
     {
-        return $this->getTaskById($id)->update([
+        return Task::findOrFail($id)->update([
             'status' => TaskStatusEnum::DONE,
             'completed_at' => Carbon::now(),
         ]);
     }
 
-    public function createTask(TaskDTO $data): Task
+    public function createTask(TaskDTO $data): TaskDTO
     {
-        return Task::create($data);
+        return Task::create($data->toArray())->getData();
     }
 
-    public function updateTask(int $id, TaskDTO $data): Task
+    public function updateTask(int $id, TaskDTO $data): TaskDTO
     {
-        $todo = $this->getTaskById($id);
+        $todo = Task::findOrFail($id);
 
-        $todo->update((array)$data);
+        $todo->update($data->toArray());
 
-        return $todo;
+        return $todo->getData();
     }
 
     public function deleteTask(int $id): bool

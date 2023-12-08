@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
         ->middleware(['auth:sanctum']);
 });
 
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'todo'], function () {
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'task'], function () {
     Route::get('list', [ListController::class, '__invoke']);
     Route::get('show/{id}', [ShowController::class, '__invoke']);
     Route::get('complete/{id}', [CompleteController::class, '__invoke']);
