@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Todo;
+namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\Service\TodoListServiceInterface;
+use App\Interfaces\Service\TaskListServiceInterface;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
-class DeleteController extends Controller
+class CompleteController extends Controller
 {
     public function __construct(
-        private readonly TodoListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $todoListService
     ) {
     }
 
     /**
-     * Delete todo
+     * Complete todo
      *
      * @param  int  $id
      * @return void
      */
-    #[OpenApi\Operation(tags: ['todo'], method: 'DELETE')]
+    #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     public function __invoke(int $id)
     {
         response()->json([
-            'status' => $this->todoListService->delete($id),
+            'status' => $this->todoListService->markAsDone($id),
         ]);
     }
 }

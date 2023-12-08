@@ -2,22 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Enums\TodoStatusEnum;
-use App\Models\Todo;
+use App\Enums\TaskStatusEnum;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class TodoFactory extends Factory
+class TaskFactory extends Factory
 {
-    protected $model = Todo::class;
+    protected $model = Task::class;
 
     public function definition(): array
     {
         return [
             'owner_id' => User::inRandomOrder()->first()?->id,
-            'parent_id' => Todo::inRandomOrder()->first()?->id,
-            'status' => TodoStatusEnum::TODO,
+            'parent_id' => Task::inRandomOrder()->first()?->id,
+            'status' => TaskStatusEnum::TODO,
             'priority' => rand(1, 5),
             'title' => $this->faker->text(),
             'description' => $this->faker->text(),

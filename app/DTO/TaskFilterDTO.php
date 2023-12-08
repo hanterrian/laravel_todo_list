@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class TodoFilterDTO
+class TaskFilterDTO
 {
     public function __construct(
         private ?string $status = null,

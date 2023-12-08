@@ -11,14 +11,14 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
 use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
 
-class TodoSchema extends SchemaFactory implements Reusable
+class TaskSchema extends SchemaFactory implements Reusable
 {
     /**
      * @return AllOf|OneOf|AnyOf|Not|Schema
      */
     public function build(): SchemaContract
     {
-        return Schema::object('Todo')
+        return Schema::object('Task')
             ->properties(
                 Schema::string('id')->default(null),
                 Schema::string('owner_id')->default(null),

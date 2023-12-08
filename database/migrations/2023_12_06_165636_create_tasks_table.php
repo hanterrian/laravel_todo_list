@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Todo;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('todos', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'owner_id');
-            $table->foreignIdFor(Todo::class, 'parent_id')->nullable();
+            $table->foreignIdFor(Task::class, 'parent_id')->nullable();
             $table->string('status');
             $table->integer('priority');
             $table->string('title');
@@ -24,6 +24,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('todos');
+        Schema::dropIfExists('tasks');
     }
 };

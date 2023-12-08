@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Models\Todo;
+use App\Models\Task;
 use Auth;
 
-class TodoObserver
+class TaskObserver
 {
     /**
-     * Handle the Todo "created" event.
+     * Handle the Task "created" event.
      *
-     * @param  Todo  $todo
+     * @param  Task  $todo
      * @return void
      */
-    public function creating(Todo $todo): void
+    public function creating(Task $todo): void
     {
         $todo->owner_id = $todo->owner_id ?? Auth::id();
     }

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Todo;
+namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TodoResource;
-use App\Interfaces\Service\TodoListServiceInterface;
+use App\Http\Resources\TaskResource;
+use App\Interfaces\Service\TaskListServiceInterface;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
 class ShowController extends Controller
 {
     public function __construct(
-        private readonly TodoListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $todoListService
     ) {
     }
 
@@ -21,11 +21,11 @@ class ShowController extends Controller
      * Show todo
      *
      * @param  int  $id
-     * @return TodoResource
+     * @return TaskResource
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     public function __invoke(int $id)
     {
-        return new TodoResource($this->todoListService->getOne($id));
+        return new TaskResource($this->todoListService->getOne($id));
     }
 }

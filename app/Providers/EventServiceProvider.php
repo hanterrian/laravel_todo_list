@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Todo;
-use App\Observers\TodoObserver;
+use App\Models\Task;
+use App\Observers\TaskObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     protected $observers = [
-        Todo::class => [TodoObserver::class],
+        Task::class => [TaskObserver::class],
     ];
 
     /**

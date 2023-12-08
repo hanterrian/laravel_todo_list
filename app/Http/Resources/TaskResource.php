@@ -7,8 +7,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Todo */
-class TodoResource extends JsonResource
+/** @mixin \App\Models\Task */
+class TaskResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -18,7 +18,7 @@ class TodoResource extends JsonResource
             'priority' => $this->priority,
             'title' => $this->title,
             'description' => $this->description,
-            'child' => TodoResource::collection($this->chilren),
+            'child' => TaskResource::collection($this->chilren),
             'completed_at' => $this->completed_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

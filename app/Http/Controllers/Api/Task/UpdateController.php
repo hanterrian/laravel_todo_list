@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Todo;
+namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TodoResource;
-use App\Interfaces\Service\TodoListServiceInterface;
+use App\Http\Resources\TaskResource;
+use App\Interfaces\Service\TaskListServiceInterface;
 use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -14,7 +14,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class UpdateController extends Controller
 {
     public function __construct(
-        private readonly TodoListServiceInterface $todoListService
+        private readonly TaskListServiceInterface $todoListService
     ) {
     }
 
@@ -23,11 +23,11 @@ class UpdateController extends Controller
      *
      * @param  int  $id
      * @param  Request  $request
-     * @return TodoResource
+     * @return TaskResource
      */
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
     public function __invoke(int $id, Request $request)
     {
-        return new TodoResource($this->todoListService->update($id, $request));
+        return new TaskResource($this->todoListService->update($id, $request));
     }
 }
