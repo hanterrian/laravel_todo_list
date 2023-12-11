@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
+use App\Filters\TaskQueryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
@@ -20,9 +23,9 @@ class TasksController extends Controller
 
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
     #[OpenApi\Parameters(factory: TaskListFilterParameters::class)]
-    public function index(Request $request)
+    public function index(Request $request, TaskQueryFilter $filter)
     {
-        return $this->taskListService->getAll($request);
+        return $this->taskListService->getAll($filter, $request);
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'POST')]

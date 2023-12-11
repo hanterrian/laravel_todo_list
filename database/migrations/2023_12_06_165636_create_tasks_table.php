@@ -13,10 +13,10 @@ return new class () extends Migration {
             $table->id();
             $table->foreignIdFor(User::class, 'owner_id');
             $table->foreignIdFor(Task::class, 'parent_id')->nullable();
-            $table->string('status');
-            $table->integer('priority');
-            $table->string('title');
-            $table->text('description');
+            $table->string('status')->index();
+            $table->integer('priority')->index();
+            $table->string('title')->fulltext();
+            $table->text('description')->fulltext();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });

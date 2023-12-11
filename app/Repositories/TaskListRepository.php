@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
 use App\Enums\TaskStatusEnum;
+use App\Filters\QueryFilter;
 use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
@@ -22,9 +23,12 @@ class TaskListRepository implements TaskListRepositoryInterface
      * @param  TaskFilterDTO  $todoFilterDTO
      * @return DataCollection<TaskDTO>
      */
-    public function getTaskList(TaskFilterDTO $todoFilterDTO): DataCollection
+    public function getTaskList(QueryFilter $filter, TaskFilterDTO $todoFilterDTO): DataCollection
     {
-        return TaskDTO::collection(Task::withExists(['children'])->get());
+        $builder = Task::withExists(['children'])
+            ->filter($filter, $todoFilterDTO);
+
+        return TaskDTO::collection($builder->get());
     }
 
     public function getTaskById(int $id): TaskDTO
@@ -73,6 +77,14 @@ class TaskListRepository implements TaskListRepositoryInterface
 
     public function deleteTask(int $id): bool
     {
-        return !!Task::findOrFail($id)->delete();
+        $task = Task::findOrFail($id);
+
+        if ($task->status === TaskStatusEnum::DONE) {
+            throw ValidationException::withMessages([
+                'id' => 'You cannot delete a task that has already been completed.',
+            ]);
+        }
+
+        return !!$task->delete();
     }
 }

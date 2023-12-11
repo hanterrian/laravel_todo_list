@@ -7,6 +7,7 @@ namespace App\Services;
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
 use App\Enums\TaskStatusEnum;
+use App\Filters\QueryFilter;
 use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
@@ -32,12 +33,13 @@ class TaskListService implements TaskListServiceInterface
     /**
      * Retrieves all items from the tasks list based on the provided filters.
      *
-     * @param  Request  $request  The HTTP request object.
+     * @param  QueryFilter $filter  Query filter
+     * @param  Request     $request  The HTTP request object.
      * @return Collection<TaskDTO> A collection of tasks items that match the provided filters.
      */
-    public function getAll(Request $request): DataCollection
+    public function getAll(QueryFilter $filter, Request $request): DataCollection
     {
-        return $this->todoListRepository->getTaskList(TaskFilterDTO::from($request->all()));
+        return $this->todoListRepository->getTaskList($filter, TaskFilterDTO::from($request));
     }
 
     /**

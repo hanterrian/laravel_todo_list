@@ -8,6 +8,7 @@ use App\Enums\TaskStatusEnum;
 use App\Models\Task;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
@@ -31,7 +32,7 @@ class TaskDTO extends Data
         public int $priority,
         public string $title,
         public string $description,
-        #[DataCollectionOf(TaskDTO::class)]
+        #[DataCollectionOf(TaskDTO::class), MapName('subTasks')]
         public ?DataCollection $children,
         public ?Carbon $createdAt,
         public ?Carbon $completedAt,

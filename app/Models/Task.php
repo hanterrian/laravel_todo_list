@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\DTO\TaskDTO;
 use App\Enums\TaskStatusEnum;
+use App\Filters\QueryFilter;
 use App\Models\Scopes\OwnerScope;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\LaravelData\Data;
 use Spatie\LaravelData\WithData;
 
 /**
@@ -25,7 +27,7 @@ use Spatie\LaravelData\WithData;
  * @property int $priority
  * @property string $title
  * @property string $description
- * @property int|null $completed_at
+ * @property \Illuminate\Support\Carbon|null $completed_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Task> $children
@@ -33,6 +35,7 @@ use Spatie\LaravelData\WithData;
  * @property-read \App\Models\User|null $owner
  * @property-read Task|null $parent
  * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
+ * @method static Builder|Task filter(\App\Filters\QueryFilter $filter, \Spatie\LaravelData\Data $dto)
  * @method static Builder|Task newModelQuery()
  * @method static Builder|Task newQuery()
  * @method static Builder|Task query()
@@ -72,6 +75,11 @@ class Task extends Model
     protected static function booted(): void
     {
         static::addGlobalScope(new OwnerScope());
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter, Data $dto): Builder
+    {
+        return $filter->apply($builder, $dto);
     }
 
     public function owner(): BelongsTo

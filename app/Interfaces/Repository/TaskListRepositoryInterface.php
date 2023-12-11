@@ -6,6 +6,7 @@ namespace App\Interfaces\Repository;
 
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
+use App\Filters\QueryFilter;
 use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use Spatie\LaravelData\DataCollection;
@@ -13,10 +14,11 @@ use Spatie\LaravelData\DataCollection;
 interface TaskListRepositoryInterface
 {
     /**
+     * @param  QueryFilter  $filter
      * @param  TaskFilterDTO  $todoFilterDTO
-     * @return DataCollection
+     * @return DataCollection<TaskDTO>
      */
-    public function getTaskList(TaskFilterDTO $todoFilterDTO): DataCollection;
+    public function getTaskList(QueryFilter $filter, TaskFilterDTO $todoFilterDTO): DataCollection;
 
     public function getTaskById(int $id): TaskDTO;
 

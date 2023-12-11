@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Interfaces\Service;
 
 use App\DTO\TaskDTO;
+use App\Filters\QueryFilter;
 use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use Spatie\LaravelData\DataCollection;
 
 interface TaskListServiceInterface
 {
-    public function getAll(Request $request): DataCollection;
+    public function getAll(QueryFilter $filter, Request $request): DataCollection;
 
     public function getOne(int $id): TaskDTO;
 
