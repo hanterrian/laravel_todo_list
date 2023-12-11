@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Task\DeleteController;
 use App\Http\Controllers\Api\Task\ListController;
 use App\Http\Controllers\Api\Task\ShowController;
 use App\Http\Controllers\Api\Task\UpdateController;
+use App\Http\Controllers\Api\TasksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,11 +34,10 @@ Route::group(['prefix' => 'auth'], function () {
         ->middleware(['auth:sanctum']);
 });
 
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'task'], function () {
-    Route::get('list', [ListController::class, '__invoke']);
-    Route::get('show/{id}', [ShowController::class, '__invoke']);
-    Route::get('complete/{id}', [CompleteController::class, '__invoke']);
-    Route::post('create', [CreateController::class, '__invoke']);
-    Route::put('update/{id}', [UpdateController::class, '__invoke']);
-    Route::delete('delete/{id}', [DeleteController::class, '__invoke']);
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'tasks'], function () {
+    Route::get('complete/{id}', [TasksController::class, 'complete']);
 });
+
+Route::apiResource('tasks', TasksController::class, [
+    'middleware' => ['auth:sanctum'],
+]);
