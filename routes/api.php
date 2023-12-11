@@ -35,7 +35,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'tasks'], function () {
-    Route::get('complete/{id}', [TasksController::class, 'complete']);
+    Route::patch('complete/{id}', [TasksController::class, 'complete']);
 });
 
 Route::apiResource('tasks', TasksController::class, [

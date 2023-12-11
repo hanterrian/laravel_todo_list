@@ -31,7 +31,9 @@ class TasksController extends Controller
     #[OpenApi\Operation(tags: ['todo'], method: 'POST')]
     public function store(CreateTaskRequest $request)
     {
-        return $this->taskListService->store($request);
+        return response()->json([
+            'data' => $this->taskListService->store($request),
+        ], 201);
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
@@ -40,25 +42,27 @@ class TasksController extends Controller
         return $this->taskListService->getOne($id);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
+    #[OpenApi\Operation(tags: ['todo'], method: 'PATCH')]
     public function complete(int $id)
     {
-        return response()->json([
-            'status' => $this->taskListService->markAsDone($id),
-        ]);
+        $this->taskListService->markAsDone($id);
+
+        return response()->json([], 204);
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
     public function update(UpdateTaskRequest $request, int $id)
     {
-        return $this->taskListService->update($id, $request);
+        return response()->json([
+            'data' => $this->taskListService->update($id, $request),
+        ], 204);
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'DELETE')]
     public function destroy(int $id)
     {
-        return response()->json([
-            'status' => $this->taskListService->delete($id),
-        ]);
+        $this->taskListService->delete($id);
+
+        return response()->json([], 204);
     }
 }
