@@ -8,8 +8,6 @@ use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
 use App\Enums\TaskStatusEnum;
 use App\Filters\QueryFilter;
-use App\Http\Requests\Task\CreateTaskRequest;
-use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Models\Task;
 use Carbon\Carbon;
@@ -61,16 +59,32 @@ class TaskListRepository implements TaskListRepositoryInterface
         ]);
     }
 
-    public function createTask(CreateTaskRequest $data): TaskDTO
+    public function createTask(TaskDTO $data): TaskDTO
     {
-        return Task::create($data->all())->getData();
+        return Task::create(
+            $data->only(
+                "parent_id",
+                "status",
+                "priority",
+                "title",
+                "description",
+            )->toArray()
+        )->getData();
     }
 
-    public function updateTask(int $id, UpdateTaskRequest $data): TaskDTO
+    public function updateTask(int $id, TaskDTO $data): TaskDTO
     {
         $todo = Task::findOrFail($id);
 
-        $todo->update($data->all());
+        $todo->update(
+            $data->only(
+                "parent_id",
+                "status",
+                "priority",
+                "title",
+                "description",
+            )->toArray()
+        );
 
         return $todo->getData();
     }

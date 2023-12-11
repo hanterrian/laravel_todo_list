@@ -9,6 +9,13 @@ use App\Models\Task;
 use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapName;
+use Spatie\LaravelData\Attributes\Validation\Enum;
+use Spatie\LaravelData\Attributes\Validation\Exists;
+use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Attributes\Validation\Numeric;
+use Spatie\LaravelData\Attributes\Validation\Required;
+use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
@@ -27,10 +34,15 @@ class TaskDTO extends Data
      */
     public function __construct(
         public ?int $id,
+        #[Numeric, Exists('tasks', 'id')]
         public ?int $parent_id,
+        #[Required, Enum(TaskStatusEnum::class)]
         public TaskStatusEnum $status,
+        #[Required, Numeric, Min(1), Max(5)]
         public int $priority,
+        #[Required, StringType, Max(255)]
         public string $title,
+        #[Required, StringType, Max(50000)]
         public string $description,
         #[DataCollectionOf(TaskDTO::class), MapName('subTasks')]
         public ?DataCollection $children,

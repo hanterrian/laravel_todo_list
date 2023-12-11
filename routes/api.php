@@ -2,12 +2,6 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
-use App\Http\Controllers\Api\Task\CompleteController;
-use App\Http\Controllers\Api\Task\CreateController;
-use App\Http\Controllers\Api\Task\DeleteController;
-use App\Http\Controllers\Api\Task\ListController;
-use App\Http\Controllers\Api\Task\ShowController;
-use App\Http\Controllers\Api\Task\UpdateController;
 use App\Http\Controllers\Api\TasksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

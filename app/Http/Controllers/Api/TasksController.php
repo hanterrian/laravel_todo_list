@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\DTO\TaskDTO;
 use App\Filters\TaskQueryFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\CreateTaskRequest;
-use App\Http\Requests\Task\UpdateTaskRequest;
 use App\OpenApi\Parameters\TaskListFilterParameters;
 use App\Services\TaskListService;
 use Illuminate\Http\Request;
@@ -29,7 +28,7 @@ class TasksController extends Controller
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'POST')]
-    public function store(CreateTaskRequest $request)
+    public function store(TaskDTO $request)
     {
         return response()->json([
             'data' => $this->taskListService->store($request),
@@ -51,7 +50,7 @@ class TasksController extends Controller
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
-    public function update(UpdateTaskRequest $request, int $id)
+    public function update(TaskDTO $request, int $id)
     {
         $this->taskListService->update($id, $request);
 

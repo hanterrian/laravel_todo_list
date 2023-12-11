@@ -6,15 +6,11 @@ namespace App\Services;
 
 use App\DTO\TaskDTO;
 use App\DTO\TaskFilterDTO;
-use App\Enums\TaskStatusEnum;
 use App\Filters\QueryFilter;
-use App\Http\Requests\Task\CreateTaskRequest;
-use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Interfaces\Service\TaskListServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
 
@@ -66,12 +62,12 @@ class TaskListService implements TaskListServiceInterface
         return $this->todoListRepository->markTaskAsComplete($id);
     }
 
-    public function store(CreateTaskRequest $request): TaskDTO
+    public function store(TaskDTO $request): TaskDTO
     {
         return $this->todoListRepository->createTask($request);
     }
 
-    public function update(int $id, UpdateTaskRequest $request): TaskDTO
+    public function update(int $id, TaskDTO $request): TaskDTO
     {
         return $this->todoListRepository->updateTask($id, $request);
     }
