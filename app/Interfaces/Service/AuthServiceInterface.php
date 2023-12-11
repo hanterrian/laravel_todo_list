@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Interfaces\Service;
 
-use Illuminate\Http\Request;
+use App\Data\LoginData;
 
 interface AuthServiceInterface
 {
-    public function login(Request $request): string;
+    public function login(LoginData $data): string;
 
-    public function logout(Request $request): void;
+    public function logout(): void;
 }

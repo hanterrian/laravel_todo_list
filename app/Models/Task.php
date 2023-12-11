@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\DTO\TaskDTO;
+use App\Data\TaskData;
 use App\Enums\TaskStatusEnum;
 use App\Filters\QueryFilter;
 use App\Models\Scopes\OwnerScope;
@@ -53,7 +53,8 @@ use Spatie\LaravelData\WithData;
  */
 class Task extends Model
 {
-    use HasFactory, WithData;
+    use HasFactory;
+    use WithData;
 
     protected $fillable = [
         'parent_id',
@@ -70,7 +71,7 @@ class Task extends Model
         'completed_at' => 'date',
     ];
 
-    protected $dataClass = TaskDTO::class;
+    protected $dataClass = TaskData::class;
 
     protected static function booted(): void
     {

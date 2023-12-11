@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DTO\TaskDTO;
-use App\DTO\TaskFilterDTO;
+use App\Data\TaskData;
+use App\Data\TaskFilterData;
 use App\Enums\TaskStatusEnum;
 use App\Filters\QueryFilter;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
@@ -18,18 +18,18 @@ use Spatie\LaravelData\DataCollection;
 class TaskListRepository implements TaskListRepositoryInterface
 {
     /**
-     * @param  TaskFilterDTO  $todoFilterDTO
-     * @return DataCollection<TaskDTO>
+     * @param  TaskFilterData  $todoFilterDTO
+     * @return DataCollection<TaskData>
      */
-    public function getTaskList(QueryFilter $filter, TaskFilterDTO $todoFilterDTO): DataCollection
+    public function getTaskList(QueryFilter $filter, TaskFilterData $todoFilterDTO): DataCollection
     {
         $builder = Task::withExists(['children'])
             ->filter($filter, $todoFilterDTO);
 
-        return TaskDTO::collection($builder->get());
+        return TaskData::collection($builder->get());
     }
 
-    public function getTaskById(int $id): TaskDTO
+    public function getTaskById(int $id): TaskData
     {
         return Task::withExists(['children'])->findOrFail($id)->getData();
     }
@@ -59,7 +59,7 @@ class TaskListRepository implements TaskListRepositoryInterface
         ]);
     }
 
-    public function createTask(TaskDTO $data): TaskDTO
+    public function createTask(TaskData $data): TaskData
     {
         return Task::create(
             $data->only(
@@ -72,7 +72,7 @@ class TaskListRepository implements TaskListRepositoryInterface
         )->getData();
     }
 
-    public function updateTask(int $id, TaskDTO $data): TaskDTO
+    public function updateTask(int $id, TaskData $data): TaskData
     {
         $todo = Task::findOrFail($id);
 

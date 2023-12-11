@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO;
+namespace App\Data;
 
 use App\Enums\TaskStatusEnum;
 use App\Models\Task;
@@ -19,7 +19,7 @@ use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
-class TaskDTO extends Data
+class TaskData extends Data
 {
     /**
      * @param  int|null  $id
@@ -28,7 +28,7 @@ class TaskDTO extends Data
      * @param  int  $priority
      * @param  string  $title
      * @param  string  $description
-     * @param  DataCollection<TaskDTO>|null  $children
+     * @param  DataCollection<TaskData>|null  $children
      * @param  Carbon|null  $createdAt
      * @param  Carbon|null  $completedAt
      */
@@ -44,7 +44,7 @@ class TaskDTO extends Data
         public string $title,
         #[Required, StringType, Max(50000)]
         public string $description,
-        #[DataCollectionOf(TaskDTO::class), MapName('subTasks')]
+        #[DataCollectionOf(TaskData::class), MapName('subTasks')]
         public ?DataCollection $children,
         public ?Carbon $createdAt,
         public ?Carbon $completedAt,
@@ -60,7 +60,7 @@ class TaskDTO extends Data
             priority: $task->priority,
             title: $task->title,
             description: $task->description,
-            children: TaskDTO::collection($task->children),
+            children: TaskData::collection($task->children),
             createdAt: $task->created_at,
             completedAt: $task->completed_at,
         );

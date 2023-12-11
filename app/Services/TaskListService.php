@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DTO\TaskDTO;
-use App\DTO\TaskFilterDTO;
+use App\Data\TaskData;
+use App\Data\TaskFilterData;
 use App\Filters\QueryFilter;
 use App\Interfaces\Repository\TaskListRepositoryInterface;
 use App\Interfaces\Service\TaskListServiceInterface;
@@ -14,6 +14,12 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
 
+/**
+ * Class TaskListService
+ *
+ * The TaskListService class provides methods to interact with the tasks list
+ * It implements the TaskListServiceInterface.
+ */
 class TaskListService implements TaskListServiceInterface
 {
     /**
@@ -29,22 +35,22 @@ class TaskListService implements TaskListServiceInterface
     /**
      * Retrieves all items from the tasks list based on the provided filters.
      *
-     * @param  QueryFilter $filter  Query filter
-     * @param  Request     $request  The HTTP request object.
-     * @return Collection<TaskDTO> A collection of tasks items that match the provided filters.
+     * @param  QueryFilter  $filter  Query filter.
+     * @param  Request  $request  The HTTP request object.
+     * @return Collection<TaskData> A collection of tasks items that match the provided filters.
      */
     public function getAll(QueryFilter $filter, Request $request): DataCollection
     {
-        return $this->todoListRepository->getTaskList($filter, TaskFilterDTO::from($request));
+        return $this->todoListRepository->getTaskList($filter, TaskFilterData::from($request));
     }
 
     /**
      * Retrieves a single task by its ID.
      *
      * @param  int  $id  The ID of the task.
-     * @return TaskDTO      The task object matching the provided ID.
+     * @return TaskData      The task object matching the provided ID.
      */
-    public function getOne(int $id): TaskDTO
+    public function getOne(int $id): TaskData
     {
         return $this->todoListRepository->getTaskById($id);
     }
@@ -62,16 +68,35 @@ class TaskListService implements TaskListServiceInterface
         return $this->todoListRepository->markTaskAsComplete($id);
     }
 
-    public function store(TaskDTO $request): TaskDTO
+    /**
+     * Store a new task in the tasks list.
+     *
+     * @param  TaskData  $request  The task data to be stored.
+     * @return TaskData           The stored task data.
+     */
+    public function store(TaskData $request): TaskData
     {
         return $this->todoListRepository->createTask($request);
     }
 
-    public function update(int $id, TaskDTO $request): TaskDTO
+    /**
+     * Update a task in the tasks list.
+     *
+     * @param  int  $id  The ID of the task to be updated.
+     * @param  TaskData  $request  The updated task data to be stored.
+     * @return TaskData           The updated task data.
+     */
+    public function update(int $id, TaskData $request): TaskData
     {
         return $this->todoListRepository->updateTask($id, $request);
     }
 
+    /**
+     * Delete a task from the tasks list.
+     *
+     * @param  int  $id  The id of the task to be deleted.
+     * @return bool   True if the task is successfully deleted, otherwise false.
+     */
     public function delete(int $id): bool
     {
         return $this->todoListRepository->deleteTask($id);

@@ -36,13 +36,12 @@ class LogoutController extends Controller
     /**
      * Logout user
      *
-     * @param  Request  $request  The incoming request object.
      * @return JsonResponse The JSON response with the generated message.
      */
     #[OpenApi\Operation(tags: ['user'], method: 'POST')]
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        $this->authService->logout($request);
+        $this->authService->logout();
 
         return response()->json([
             'message' => 'Successfully logged out',

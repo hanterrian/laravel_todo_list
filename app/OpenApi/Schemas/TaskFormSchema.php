@@ -14,14 +14,14 @@ use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
 use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
 
-class TaskSchema extends SchemaFactory implements Reusable
+class TaskFormSchema extends SchemaFactory implements Reusable
 {
     /**
      * @return AllOf|OneOf|AnyOf|Not|Schema
      */
     public function build(): SchemaContract
     {
-        return Schema::object('Task')
+        return Schema::object('TaskForm')
             ->properties(
                 Schema::string('parent_id')
                     ->description('Parent task ID')
@@ -43,15 +43,6 @@ class TaskSchema extends SchemaFactory implements Reusable
                 Schema::string('description')
                     ->description('Task description')
                     ->maximum(50000),
-
-                Schema::string('completed_at')
-                    ->description('Task complete time')
-                    ->format(Schema::FORMAT_DATE_TIME)
-                    ->default(null),
-
-                Schema::string('created_at')
-                    ->description('Task create time')
-                    ->format(Schema::FORMAT_DATE_TIME),
             );
     }
 }

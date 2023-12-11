@@ -4,44 +4,87 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\DTO\TaskDTO;
+use App\Data\TaskData;
 use App\Filters\TaskQueryFilter;
 use App\Http\Controllers\Controller;
+use App\OpenApi\Parameters\TaskIdParameters;
 use App\OpenApi\Parameters\TaskListFilterParameters;
+use App\OpenApi\RequestBodies\TaskDataRequestBody;
 use App\Services\TaskListService;
 use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
+/**
+ * Api tasks controller, use to list, view, create, update, complete and delete task.
+ *
+ * TasksController
+ * @package App\Http\Controllers\Api
+ *
+ * @property TaskListService $taskListService Tasks operation service
+ */
 #[OpenApi\PathItem]
 class TasksController extends Controller
 {
+    /**
+     * @param  TaskListService  $taskListService  Tasks operation service.
+     *
+     * @return void
+     */
     public function __construct(
         private readonly TaskListService $taskListService
     ) {
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
+    /**
+     * List of tasks
+     *
+     * @param  Request  $request
+     * @param  TaskQueryFilter  $filter
+     * @return \Spatie\LaravelData\DataCollection<TaskData> The response with the collection of tasks items that match the provided filters
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'GET')]
     #[OpenApi\Parameters(factory: TaskListFilterParameters::class)]
     public function index(Request $request, TaskQueryFilter $filter)
     {
         return $this->taskListService->getAll($filter, $request);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'POST')]
-    public function store(TaskDTO $request)
+    /**
+     * Create new task
+     *
+     * @param  TaskData  $request  The incoming request data (validated by rule)
+     * @return \Illuminate\Http\JsonResponse The JSON response with new task data
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'POST')]
+    #[OpenApi\RequestBody(factory: TaskDataRequestBody::class)]
+    public function store(TaskData $request)
     {
         return response()->json([
             'data' => $this->taskListService->store($request),
         ], 201);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'GET')]
+    /**
+     * Show task data
+     *
+     * @param  int  $id  ID shows task
+     * @return TaskData The DTO with task data
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'GET')]
+    #[OpenApi\Parameters(factory: TaskIdParameters::class)]
     public function show(int $id)
     {
         return $this->taskListService->getOne($id);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'PATCH')]
+    /**
+     * Complete task
+     *
+     * @param  int  $id  ID completed task
+     * @return \Illuminate\Http\JsonResponse The JSON response without content
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'PATCH')]
+    #[OpenApi\Parameters(factory: TaskIdParameters::class)]
     public function complete(int $id)
     {
         $this->taskListService->markAsDone($id);
@@ -49,15 +92,31 @@ class TasksController extends Controller
         return response()->json([], 204);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
-    public function update(TaskDTO $request, int $id)
+    /**
+     * Update task data
+     *
+     * @param  TaskData  $request  The incoming request data (validated by rule)
+     * @param  int  $id  ID updated task
+     * @return \Illuminate\Http\JsonResponse The JSON response without content
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'PUT')]
+    #[OpenApi\Parameters(factory: TaskIdParameters::class)]
+    #[OpenApi\RequestBody(factory: TaskDataRequestBody::class)]
+    public function update(TaskData $request, int $id)
     {
         $this->taskListService->update($id, $request);
 
         return response()->json([], 204);
     }
 
-    #[OpenApi\Operation(tags: ['todo'], method: 'DELETE')]
+    /**
+     * Delete task
+     *
+     * @param  int  $id  ID deleted task
+     * @return \Illuminate\Http\JsonResponse The JSON response without content
+     */
+    #[OpenApi\Operation(tags: ['task'], security: 'BearerToken', method: 'DELETE')]
+    #[OpenApi\Parameters(factory: TaskIdParameters::class)]
     public function destroy(int $id)
     {
         $this->taskListService->delete($id);

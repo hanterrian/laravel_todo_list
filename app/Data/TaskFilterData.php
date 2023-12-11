@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO;
+namespace App\Data;
 
 use App\Enums\TaskStatusEnum;
 use Spatie\LaravelData\Attributes\Validation\Enum;
@@ -12,7 +12,7 @@ use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 
-class TaskFilterDTO extends Data
+class TaskFilterData extends Data
 {
     public function __construct(
         #[Enum(TaskStatusEnum::class)]

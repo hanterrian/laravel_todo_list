@@ -22,24 +22,28 @@ class TaskListFilterParameters extends ParametersFactory
                 ->description('Task status')
                 ->required(false)
                 ->schema(Schema::string()),
+
             Parameter::query()
                 ->name('priority')
                 ->description('Task priority')
                 ->required(false)
-                ->schema(Schema::string()),
+                ->schema(Schema::integer()),
+
             Parameter::query()
                 ->name('title')
                 ->description('Task title')
                 ->required(false)
                 ->schema(Schema::string()),
+
             Parameter::query()
                 ->name('description')
                 ->description('Task description')
                 ->required(false)
                 ->schema(Schema::string()),
+
             Parameter::query()
                 ->name('sort')
-                ->description('Task list sort (?sort=-popularity,price)')
+                ->description('Task list sort (?sort=-priority,createdAt)')
                 ->required(false)
                 ->schema(Schema::string()),
 

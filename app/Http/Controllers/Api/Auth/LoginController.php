@@ -12,38 +12,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Auth;
 
-use /**
- * Class Controller
- *
- * @package App\Http\Controllers
- *
- * This class represents the base controller for all controllers in the application.
- * It provides common functionality and services that are required by multiple controllers.
- */
-    App\Http\Controllers\Controller;
-use /**
- * Interface AuthServiceInterface
- *
- * This interface defines the methods that a concrete AuthService class must implement.
- * AuthService handles user authentication and authorization functionality.
- */
-    App\Interfaces\Service\AuthServiceInterface;
+use App\Data\LoginData;
+use App\Http\Controllers\Controller;
+use App\Interfaces\Service\AuthServiceInterface;
+use App\OpenApi\RequestBodies\LoginDataRequestBody;
 use Illuminate\Http\JsonResponse;
-use /**
- * Class Request
- *
- * The Request class represents an incoming HTTP request in the Laravel framework.
- * It provides methods to access the HTTP headers, query parameters, request body, and other request related information.
- *
- * @package Illuminate\Http
- */
-    Illuminate\Http\Request;
-use /**
- * This file contains the definition of the OpenApi attribute classes for Laravel.
- *
- * @package Vyuldashev\LaravelOpenApi\Attributes
- */
-    Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
+use Illuminate\Http\Request;
+use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 /**
  * This class handles the authenticating functionality for a user.
@@ -75,10 +50,11 @@ class LoginController extends Controller
      * @return JsonResponse The JSON response with the generated access token.
      */
     #[OpenApi\Operation(tags: ['user'], method: 'POST')]
-    public function __invoke(Request $request)
+    #[OpenApi\RequestBody(factory: LoginDataRequestBody::class)]
+    public function __invoke(LoginData $data)
     {
         return response()->json([
-            'accessToken' => $this->authService->login($request),
+            'accessToken' => $this->authService->login($data),
         ]);
     }
 }

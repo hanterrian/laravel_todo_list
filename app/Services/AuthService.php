@@ -4,36 +4,35 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Data\LoginData;
 use App\Interfaces\Service\AuthServiceInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AuthService implements AuthServiceInterface
 {
-    public function login(Request $request): string
-    {
-        $request->validate([
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-            'remember_me' => ['boolean'],
-        ]);
+    public function __construct(
+        private readonly Request $request
+    ) {
+    }
 
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+    public function login(LoginData $data): string
+    {
+        if (!Auth::attempt($data->toArray())) {
             throw ValidationException::withMessages([
                 'email' => 'Wrong email or password',
             ]);
         }
 
-        $user = $request->user();
+        $user = $this->request->user();
         $tokenResult = $user->createToken('Personal Access Token');
 
         return $tokenResult->plainTextToken;
     }
 
-    public function logout(Request $request): void
+    public function logout(): void
     {
-        $request->user()->tokens()->delete();
+        $this->request->user()->tokens()->delete();
     }
 }
