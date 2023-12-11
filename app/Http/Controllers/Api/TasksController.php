@@ -53,9 +53,9 @@ class TasksController extends Controller
     #[OpenApi\Operation(tags: ['todo'], method: 'PUT')]
     public function update(UpdateTaskRequest $request, int $id)
     {
-        return response()->json([
-            'data' => $this->taskListService->update($id, $request),
-        ], 204);
+        $this->taskListService->update($id, $request);
+
+        return response()->json([], 204);
     }
 
     #[OpenApi\Operation(tags: ['todo'], method: 'DELETE')]
