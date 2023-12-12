@@ -2,6 +2,7 @@
 
 namespace App\OpenApi\Responses;
 
+use App\OpenApi\Schemas\EmptySchema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
 use Vyuldashev\LaravelOpenApi\Contracts\Reusable;
@@ -13,7 +14,7 @@ class DummyResponse extends ResponseFactory implements Reusable
     {
         return Response::ok('DummyResponse')
             ->content(
-                MediaType::json()
+                MediaType::json()->schema(EmptySchema::ref()),
             )
             ->description('Empty content response');
     }

@@ -34,4 +34,5 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'tasks'], function (
 
 Route::apiResource('tasks', TasksController::class, [
     'middleware' => ['auth:sanctum'],
+    'parameters' => ['tasks' => 'id'],
 ]);
