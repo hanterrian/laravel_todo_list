@@ -14,10 +14,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
+use Spatie\LaravelData\Exceptions\InvalidDataClass;
 
 class TaskListRepository implements TaskListRepositoryInterface
 {
     /**
+     * Get all tasks
+     *
+     * @param  QueryFilter  $filter
      * @param  TaskFilterData  $todoFilterDTO
      * @return DataCollection<TaskData>
      */
@@ -29,11 +33,23 @@ class TaskListRepository implements TaskListRepositoryInterface
         return TaskData::collection($builder->get());
     }
 
+    /**
+     * Get task by id
+     *
+     * @param  int  $id
+     * @return TaskData
+     */
     public function getTaskById(int $id): TaskData
     {
         return Task::withExists(['children'])->findOrFail($id)->getData();
     }
 
+    /**
+     * Complete the task
+     *
+     * @param  int  $id
+     * @return bool
+     */
     public function markTaskAsComplete(int $id): bool
     {
         $task = Task::with([
@@ -59,6 +75,13 @@ class TaskListRepository implements TaskListRepositoryInterface
         ]);
     }
 
+    /**
+     * Create new task
+     *
+     * @param  TaskData  $data
+     * @return TaskData
+     * @throws InvalidDataClass
+     */
     public function createTask(TaskData $data): TaskData
     {
         return Task::create(
@@ -72,6 +95,14 @@ class TaskListRepository implements TaskListRepositoryInterface
         )->getData();
     }
 
+    /**
+     * Update the task
+     *
+     * @param  int  $id
+     * @param  TaskData  $data
+     * @return TaskData
+     * @throws InvalidDataClass
+     */
     public function updateTask(int $id, TaskData $data): TaskData
     {
         $todo = Task::findOrFail($id);
@@ -89,6 +120,12 @@ class TaskListRepository implements TaskListRepositoryInterface
         return $todo->getData();
     }
 
+    /**
+     * Delete the task
+     *
+     * @param  int  $id
+     * @return bool
+     */
     public function deleteTask(int $id): bool
     {
         $task = Task::findOrFail($id);

@@ -8,6 +8,9 @@ use App\Enums\TaskStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
+/**
+ * Task list filter builder
+ */
 class TaskQueryFilter extends QueryFilter
 {
     public function status(TaskStatusEnum $status): void

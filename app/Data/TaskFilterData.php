@@ -12,6 +12,9 @@ use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 
+/**
+ * Task list filter DTO
+ */
 class TaskFilterData extends Data
 {
     public function __construct(

@@ -18,7 +18,6 @@ use Spatie\LaravelData\DataCollection;
  * Class TaskListService
  *
  * The TaskListService class provides methods to interact with the tasks list
- * It implements the TaskListServiceInterface.
  */
 class TaskListService implements TaskListServiceInterface
 {
@@ -37,7 +36,7 @@ class TaskListService implements TaskListServiceInterface
      *
      * @param  QueryFilter  $filter  Query filter.
      * @param  Request  $request  The HTTP request object.
-     * @return Collection<TaskData> A collection of tasks items that match the provided filters.
+     * @return DataCollection<TaskData> A collection of tasks items that match the provided filters.
      */
     public function getAll(QueryFilter $filter, Request $request): DataCollection
     {

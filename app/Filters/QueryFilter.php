@@ -7,6 +7,9 @@ namespace App\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\LaravelData\Data;
 
+/**
+ * Main class to filter query scope
+ */
 abstract class QueryFilter
 {
     /**

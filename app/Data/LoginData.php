@@ -11,6 +11,9 @@ use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 
+/**
+ * User login DTO
+ */
 class LoginData extends Data
 {
     public function __construct(

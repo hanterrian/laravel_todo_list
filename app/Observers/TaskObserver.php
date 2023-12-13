@@ -7,6 +7,9 @@ namespace App\Observers;
 use App\Models\Task;
 use Auth;
 
+/**
+ * Task observer set current user as owner
+ */
 class TaskObserver
 {
     /**

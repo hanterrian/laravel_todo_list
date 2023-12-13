@@ -19,6 +19,9 @@ use Spatie\LaravelData\Attributes\Validation\StringType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
+/**
+ * Task DTO
+ */
 class TaskData extends Data
 {
     /**
