@@ -53,8 +53,24 @@ Startup sail
 |   |   └── TaskQueryFilter.php
 |   ├── Http
 |   |   ├── Controllers
+|   |   |   ├── Api
+|   |   |   |   └── Auth
+|   |   |   |   |   ├── LoginController.php
+|   |   |   |   |   └── LogoutController.php
+|   |   |   |   └── TasksController.php
+|   |   |   └── Controller.php
 |   |   ├── Middleware
-|   |   ├── Requests
+|   |   |   ├── Authenticate.php
+|   |   |   ├── EncryptCookies.php
+|   |   |   ├── EnsureEmailIsVerified.php
+|   |   |   ├── ForceJsonResponse.php
+|   |   |   ├── PreventRequestsDuringMaintenance.php
+|   |   |   ├── RedirectIfAuthenticated.php
+|   |   |   ├── TrimStrings.php
+|   |   |   ├── TrustHosts.php
+|   |   |   ├── TrustProxies.php
+|   |   |   ├── ValidateSignature.php
+|   |   |   └── VerifyCsrfToken.php
 |   |   └── Kernel.php
 |   ├── Interfaces
 |   |   ├── Repository
