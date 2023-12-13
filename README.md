@@ -59,9 +59,9 @@ Startup sail
 |   ├── Interfaces
 |   |   ├── Repository
 |   |   |   └── TaskListRepositoryInterface.php
-|   |   ├── Service
-|   |   |   ├── AuthServiceInterface.php
-|   |   |   └── TaskListServiceInterface.php
+|   |   └── Service
+|   |       ├── AuthServiceInterface.php
+|   |       └── TaskListServiceInterface.php
 |   ├── Models
 |   |   ├── Scopes
 |   |   |   └── OwnerScope.php
@@ -95,7 +95,7 @@ Startup sail
 |   |   |   ├── TaskListSchema.php
 |   |   |   └── TaskSchema.php
 |   |   └── SecuritySchemes
-|   |   |   └── BearerToken.php
+|   |       └── BearerToken.php
 |   ├── Providers
 |   |   ├── AppServiceProvider.php
 |   |   ├── AuthServiceProvider.php
@@ -105,8 +105,8 @@ Startup sail
 |   |   └── RouteServiceProvider.php
 |   ├── Repositories
 |   |   └── TaskListRepository.php
-|   ├── Services
-|   |   ├── AuthService.php
-|   |   └── TaskListService.php
+|   └── Services
+|       ├── AuthService.php
+|       └── TaskListService.php
 .
 ```
