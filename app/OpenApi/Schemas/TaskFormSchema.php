@@ -26,20 +26,16 @@ class TaskFormSchema extends SchemaFactory implements Reusable
                 Schema::string('parent_id')
                     ->description('Parent task ID')
                     ->default(null),
-
                 Schema::string('status')
                     ->description('Task statuses')
                     ->enum(TaskStatusEnum::TODO, TaskStatusEnum::DONE),
-
                 Schema::integer('priority')
                     ->description('Task priority')
                     ->minimum(1)
                     ->maximum(5),
-
                 Schema::string('title')
                     ->description('Task title')
                     ->maximum(255),
-
                 Schema::string('description')
                     ->description('Task description')
                     ->maximum(50000),

@@ -33,6 +33,16 @@ Startup sail
 ./vendor/bin/sail up -d
 ```
 
+Setup database & seed
+
+```shell
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+```
+
+Seed create 10 random user and one main (main@localhost.loc | password), and 30 root task,
+then 300 sub-tasks with random parent
+
 # Project structure
 
 ```

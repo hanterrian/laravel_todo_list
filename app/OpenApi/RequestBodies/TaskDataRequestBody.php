@@ -14,7 +14,7 @@ class TaskDataRequestBody extends RequestBodyFactory
         return RequestBody::create('TaskData')
             ->description('Task form data')
             ->content(
-                MediaType::json()->schema(TaskFormSchema::ref())
+                MediaType::formUrlEncoded()->schema(TaskFormSchema::ref())
             );
     }
 }

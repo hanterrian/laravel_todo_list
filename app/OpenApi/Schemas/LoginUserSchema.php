@@ -23,11 +23,12 @@ class LoginUserSchema extends SchemaFactory implements Reusable
                 Schema::string('email')
                     ->description('User email')
                     ->required()
+                    ->example('main@localhost.loc')
                     ->maximum(255),
-
                 Schema::string('password')
                     ->description('User password')
                     ->required()
+                    ->example('password')
                     ->maximum(255),
             );
     }

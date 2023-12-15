@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskStatusEnum;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignIdFor(User::class, 'owner_id');
             $table->foreignIdFor(Task::class, 'parent_id')->nullable();
-            $table->string('status')->index();
+            $table->enum('status', TaskStatusEnum::values())->index();
             $table->integer('priority')->index();
             $table->string('title')->fulltext();
             $table->text('description')->fulltext();

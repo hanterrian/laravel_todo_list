@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\OpenApi\Parameters;
 
+use App\Enums\TaskStatusEnum;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Vyuldashev\LaravelOpenApi\Factories\ParametersFactory;
@@ -21,13 +22,13 @@ class TaskListFilterParameters extends ParametersFactory
                 ->name('status')
                 ->description('Task status')
                 ->required(false)
-                ->schema(Schema::string()),
+                ->schema(Schema::string()->enum(TaskStatusEnum::TODO, TaskStatusEnum::DONE)),
 
             Parameter::query()
                 ->name('priority')
                 ->description('Task priority')
                 ->required(false)
-                ->schema(Schema::integer()),
+                ->schema(Schema::integer()->minimum(1)->maximum(5)),
 
             Parameter::query()
                 ->name('title')

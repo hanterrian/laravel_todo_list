@@ -14,7 +14,7 @@ class LoginDataRequestBody extends RequestBodyFactory
         return RequestBody::create('UserLogin')
             ->description('User login')
             ->content(
-                MediaType::json()->schema(LoginUserSchema::ref())
+                MediaType::formUrlEncoded()->schema(LoginUserSchema::ref())
             );
     }
 }
