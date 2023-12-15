@@ -15,7 +15,7 @@ return new class () extends Migration {
             $table->foreignIdFor(User::class, 'owner_id');
             $table->foreignIdFor(Task::class, 'parent_id')->nullable();
             $table->enum('status', TaskStatusEnum::values())->index();
-            $table->integer('priority')->index();
+            $table->smallInteger('priority')->index();
             $table->string('title')->fulltext();
             $table->text('description')->fulltext();
             $table->timestamp('completed_at')->nullable();
