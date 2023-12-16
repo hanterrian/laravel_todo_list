@@ -51,24 +51,24 @@ then 300 sub-tasks with random parent
 |   ├── Console
 |   |   └── Kernel.php
 |   ├── Data
-|   |   ├── LoginData.php
-|   |   ├── TaskData.php
-|   |   └── TaskFilterData.php
+|   |   ├── LoginData.php                               # Login DTO
+|   |   ├── TaskData.php                                # Task DTO
+|   |   └── TaskFilterData.php                          # Task filter DTO
 |   ├── Enums
-|   |   └── TaskStatusEnum.php
+|   |   └── TaskStatusEnum.php                          # Task statuses enum
 |   ├── Exceptions
 |   |   └── Handler.php
 |   ├── Filters
-|   |   ├── QueryFilter.php
-|   |   └── TaskQueryFilter.php
+|   |   ├── QueryFilter.php                             # Main query filter to model
+|   |   └── TaskQueryFilter.php                         # Task list filter
 |   ├── Http
 |   |   ├── Controllers
 |   |   |   ├── Api
 |   |   |   |   └── Auth
-|   |   |   |   |   ├── LoginController.php
-|   |   |   |   |   └── LogoutController.php
-|   |   |   |   └── TasksController.php
-|   |   |   └── Controller.php
+|   |   |   |   |   ├── LoginController.php             # Login single controller
+|   |   |   |   |   └── LogoutController.php            # Logout single controller
+|   |   |   |   └── TasksController.php                 # Tasks CRUD controller
+|   |   |   └── Controller.php                          # Main app controller
 |   |   ├── Middleware
 |   |   |   ├── Authenticate.php
 |   |   |   ├── EncryptCookies.php
@@ -84,44 +84,44 @@ then 300 sub-tasks with random parent
 |   |   └── Kernel.php
 |   ├── Interfaces
 |   |   ├── Repository
-|   |   |   └── TaskListRepositoryInterface.php
+|   |   |   └── TaskListRepositoryInterface.php         # Interface to tasks repository
 |   |   └── Service
-|   |       ├── AuthServiceInterface.php
-|   |       └── TaskListServiceInterface.php
+|   |       ├── AuthServiceInterface.php                # Interface to authenticate service
+|   |       └── TaskListServiceInterface.php            # Interface to tasks service
 |   ├── Models
 |   |   ├── Scopes
-|   |   |   └── OwnerScope.php
-|   |   ├── Task.php
-|   |   └── User.php
+|   |   |   └── OwnerScope.php                          # Scope to select only owners tasks
+|   |   ├── Task.php                                    # Task model
+|   |   └── User.php                                    # User model
 |   ├── Observers
-|   |   └── TaskObserver.php
-|   ├── OpenApi
+|   |   └── TaskObserver.php                            # Observer to add owner id from Auth::id() by created task
+|   ├── OpenApi                                         # Classes to generate OpenApi documentation
 |   |   ├── Parameters
-|   |   |   ├── TaskIdParameters.php
-|   |   |   └── TaskListFilterParameters.php
+|   |   |   ├── TaskIdParameters.php                    # OpenApi task "id" parameter
+|   |   |   └── TaskListFilterParameters.php            # OpenApi tasks list filter parameter
 |   |   ├── RequestBodies
-|   |   |   ├── LoginDataRequestBody.php
-|   |   |   └── TaskDataRequestBody.php
+|   |   |   ├── LoginDataRequestBody.php                # OpenApi login request
+|   |   |   └── TaskDataRequestBody.php                 # OpenApi create/update request
 |   |   ├── Responses
 |   |   |   ├── Error
-|   |   |   |   ├── ErrorForbiddenResponse.php
-|   |   |   |   ├── ErrorNotFoundResponse.php
-|   |   |   |   ├── ErrorUnauthenticatedResponse.php
-|   |   |   |   └── ErrorValidationResponse.php
-|   |   |   ├── DummyResponse.php
-|   |   |   ├── FormTaskResponse.php
-|   |   |   ├── ListTaskResponse.php
-|   |   |   ├── LoginResponse.php
-|   |   |   └── TaskResponse.php
+|   |   |   |   ├── ErrorForbiddenResponse.php          # OpenApi 401 error response
+|   |   |   |   ├── ErrorNotFoundResponse.php           # OpenApi 404 error response
+|   |   |   |   ├── ErrorUnauthenticatedResponse.php    # OpenApi 401 error response
+|   |   |   |   └── ErrorValidationResponse.php         # OpenApi 422 error response
+|   |   |   ├── DummyResponse.php                       # OpenApi dummy/empty response
+|   |   |   ├── FormTaskResponse.php                    # OpenApi create/update action response
+|   |   |   ├── ListTaskResponse.php                    # OpenApi task list action rasponse
+|   |   |   ├── LoginResponse.php                       # OpenApi login action response
+|   |   |   └── TaskResponse.php                        # OpenApi task action response
 |   |   ├── Schemas
-|   |   |   ├── EmptySchema.php
-|   |   |   ├── LoginSchema.php
-|   |   |   ├── LoginUserSchema.php
-|   |   |   ├── TaskFormSchema.php
-|   |   |   ├── TaskListSchema.php
-|   |   |   └── TaskSchema.php
+|   |   |   ├── EmptySchema.php                         # OpenApi empty response schema
+|   |   |   ├── LoginSchema.php                         # OpenApi access token response schema
+|   |   |   ├── LoginUserSchema.php                     # OpenApi user credential schema
+|   |   |   ├── TaskFormSchema.php                      # OpenApi create/update task body schema
+|   |   |   ├── TaskListSchema.php                      # OpenApi task list schema
+|   |   |   └── TaskSchema.php                          # OpenApi single task schema
 |   |   └── SecuritySchemes
-|   |       └── BearerToken.php
+|   |       └── BearerToken.php                         # OpenApi secure schema
 |   ├── Providers
 |   |   ├── AppServiceProvider.php
 |   |   ├── AuthServiceProvider.php
@@ -130,9 +130,9 @@ then 300 sub-tasks with random parent
 |   |   ├── RepositoryServiceProvider.php
 |   |   └── RouteServiceProvider.php
 |   ├── Repositories
-|   |   └── TaskListRepository.php
+|   |   └── TaskListRepository.php                      # Repository to operate tasks
 |   └── Services
-|       ├── AuthService.php
-|       └── TaskListService.php
+|       ├── AuthService.php                             # Service to operate authentication/logout process
+|       └── TaskListService.php                         # Service to operate tasks actions
 .
 ```

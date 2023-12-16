@@ -15,9 +15,9 @@ abstract class QueryFilter
     /**
      * @var Builder
      */
-    protected $builder;
+    protected Builder $builder;
 
-    public function apply(Builder $builder, Data $dto)
+    public function apply(Builder $builder, Data $dto): Builder
     {
         $this->builder = $builder;
 

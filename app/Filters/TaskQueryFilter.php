@@ -13,26 +13,56 @@ use Illuminate\Support\Str;
  */
 class TaskQueryFilter extends QueryFilter
 {
+    /**
+     * Filter by task status
+     *
+     * @param  TaskStatusEnum  $status
+     * @return void
+     */
     public function status(TaskStatusEnum $status): void
     {
         $this->builder->where('status', $status);
     }
 
+    /**
+     * Filter by priority
+     *
+     * @param  int  $priority
+     * @return void
+     */
     public function priority(int $priority): void
     {
         $this->builder->where('priority', $priority);
     }
 
+    /**
+     * Search by title
+     *
+     * @param  string  $title
+     * @return void
+     */
     public function title(string $title): void
     {
         $this->builder->whereFullText('title', $title);
     }
 
+    /**
+     * Search by description
+     *
+     * @param  string  $description
+     * @return void
+     */
     public function description(string $description): void
     {
         $this->builder->whereFullText('description', $description);
     }
 
+    /**
+     * Process sort query
+     *
+     * @param  string  $sort
+     * @return void
+     */
     public function sort(string $sort): void
     {
         $allowedSortColumnMap = [
