@@ -22,35 +22,7 @@ class TaskListSchema extends SchemaFactory implements Reusable
     public function build(): SchemaContract
     {
         return Schema::array('TaskList')->items(
-            Schema::object('Task')
-                ->properties(
-                    Schema::string('parent_id')
-                        ->description('Parent task ID')
-                        ->default(null),
-                    Schema::string('status')
-                        ->description('Task statuses')
-                        ->enum(TaskStatusEnum::TODO, TaskStatusEnum::DONE),
-                    Schema::integer('priority')
-                        ->description('Task priority')
-                        ->minimum(1)
-                        ->maximum(5),
-                    Schema::string('title')
-                        ->description('Task title')
-                        ->maximum(255),
-                    Schema::string('description')
-                        ->description('Task description')
-                        ->maximum(50000),
-                    Schema::object('subTasks')
-                        ->description('list of sub tasks')
-                        ->default([]),
-                    Schema::string('completed_at')
-                        ->description('Task complete time')
-                        ->format(Schema::FORMAT_DATE_TIME)
-                        ->default(null),
-                    Schema::string('created_at')
-                        ->description('Task create time')
-                        ->format(Schema::FORMAT_DATE_TIME),
-                )
+            TaskSchema::ref('Task')
         );
     }
 }
