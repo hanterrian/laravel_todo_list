@@ -44,6 +44,8 @@ Setup database & seed
 Seed create 10 random user and one main (main@localhost.loc | password), and 30 root task,
 then 300 sub-tasks with random parent
 
+Swagger-UI http://localhost
+
 # Project structure
 
 ```
